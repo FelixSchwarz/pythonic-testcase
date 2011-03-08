@@ -26,24 +26,27 @@
 # use/relicense the code in any other project. If you need relicensing under any
 # other free software license, I'm happy to do that.
 
+from unittest import TestCase
 
-__all__ = ['assert_equals', 'assert_raises']
+from pythonic_testcase import assert_equals, assert_raises
+from tests.assert_raises_test import exception_message
 
-def assert_raises(exception, callable, message=None):
-    try:
-        callable()
-    except exception, e:
-        return e
-    default_message = u'%s not raised!' % exception.__name__
-    if message is None:
-        raise AssertionError(default_message)
-    raise AssertionError(default_message + ' ' + message)
-
-def assert_equals(expected, actual, message=None):
-    if expected == actual:
-        return
-    default_message = '%s != %s' % (repr(expected), repr(actual))
-    if message is None:
-        raise AssertionError(default_message)
-    raise AssertionError(default_message + ': ' + message)
+class AssertEqualsTest(TestCase):
+    # assert_equals testing relies on assert_raises being correct
+    
+    def test_passes_if_values_are_equal(self):
+        assert_equals(1, 1)
+    
+    def test_fails_if_values_are_not_equal(self):
+        assert_raises(AssertionError, lambda: assert_equals(1, 2))
+    
+    def test_fails_with_sensible_default_error_message(self):
+        # using a string here on purpose so we can check that repr is used in 
+        # exception message
+        e = assert_raises(AssertionError, lambda: assert_equals('foo', 'bar'))
+        assert "'foo' != 'bar'" == exception_message(e), repr(exception_message(e))
+    
+    def test_can_specify_additional_custom_message(self):
+        e = assert_raises(AssertionError, lambda: assert_equals(1, 2, message='foo'))
+        assert "1 != 2: foo" == exception_message(e), repr(exception_message(e))
 
