@@ -34,10 +34,9 @@ def assert_raises(exception, callable, message=None):
         callable()
     except exception, e:
         return e
-    else:
-        default_message = u'%s not raised!' % exception.__name__
-        if message is None:
-            raise AssertionError(default_message)
-        raise AssertionError(default_message + ' ' + message)
+    default_message = u'%s not raised!' % exception.__name__
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ' ' + message)
 
 
