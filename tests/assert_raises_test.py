@@ -78,7 +78,7 @@ class AssertRaisesTest(TestCase):
         else:
             self.fail('Did not raise ValueError')
     
-    def test_fails_with_default_error_message(self):
+    def test_fails_with_sensible_default_error_message(self):
         try:
             assert_raises(ValueError, self._good_callable())
         except AssertionError, e:
