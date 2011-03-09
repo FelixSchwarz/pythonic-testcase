@@ -29,28 +29,30 @@
 
 from unittest import TestCase
 
-from pythonic_testcase import assert_equals, assert_raises
+from pythonic_testcase import assert_equals, assert_none, assert_raises
 from tests.assert_raises_test import exception_message
 
-
-class AssertEqualsTest(TestCase):
-    # assert_equals testing relies on assert_raises being correct, however it 
-    # should not rely on any other helper method so assert_raises and 
-    # assert_equals can provide the foundation for all other test methods
+class AssertNoneTest(TestCase):
     
-    def test_passes_if_values_are_equal(self):
-        assert_equals(1, 1)
+    def test_passes_if_value_is_none(self):
+        assert_none(None)
     
-    def test_fails_if_values_are_not_equal(self):
-        assert_raises(AssertionError, lambda: assert_equals(1, 2))
+    def assert_fail(self, value, message=None):
+        return assert_raises(AssertionError, lambda: assert_none(value, message=message))
+        
+    def test_fails_if_value_is_not_None(self):
+        self.assert_fail(1)
+        self.assert_fail('')
+        self.assert_fail([])
+        self.assert_fail(dict())
     
     def test_fails_with_sensible_default_error_message(self):
         # using a string here on purpose so we can check that repr is used in 
         # exception message
-        e = assert_raises(AssertionError, lambda: assert_equals('foo', 'bar'))
-        assert "'foo' != 'bar'" == exception_message(e), repr(exception_message(e))
+        e = self.assert_fail('bar')
+        assert_equals("None != 'bar'", exception_message(e))
     
     def test_can_specify_additional_custom_message(self):
-        e = assert_raises(AssertionError, lambda: assert_equals(1, 2, message='foo'))
-        assert "1 != 2: foo" == exception_message(e), repr(exception_message(e))
+        e = self.assert_fail('bar', message='Foo')
+        assert_equals("None != 'bar': Foo", exception_message(e))
 

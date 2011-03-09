@@ -27,7 +27,8 @@
 # I'm happy to relicense this code if necessary for inclusion in other free 
 # software projects.
 
-__all__ = ['assert_equals', 'assert_raises']
+__all__ = ['assert_equals', 'assert_none', 'assert_raises']
+
 
 def assert_raises(exception, callable, message=None):
     try:
@@ -46,4 +47,7 @@ def assert_equals(expected, actual, message=None):
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
+
+def assert_none(actual, message=None):
+    assert_equals(None, actual, message=message)
 
