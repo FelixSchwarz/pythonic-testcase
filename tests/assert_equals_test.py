@@ -33,7 +33,9 @@ from pythonic_testcase import assert_equals, assert_raises
 from tests.assert_raises_test import exception_message
 
 class AssertEqualsTest(TestCase):
-    # assert_equals testing relies on assert_raises being correct
+    # assert_equals testing relies on assert_raises being correct, however it 
+    # should not rely on any other helper method so assert_raises and 
+    # assert_equals can provide the foundation for all other test methods
     
     def test_passes_if_values_are_equal(self):
         assert_equals(1, 1)
