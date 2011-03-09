@@ -79,5 +79,22 @@ def assert_not_equals(expected, actual, message=None):
 def assert_not_none(actual, message=None):
     assert_not_equals(None, actual, message=message)
 
+def assert_contains(expected_value, actual_iterable, message=None):
+    if expected_value in actual_iterable:
+        return
+    default_message = '%s not in %s' % (repr(expected_value), repr(actual_iterable))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+def assert_not_contains(expected_value, actual_iterable, message=None):
+    if expected_value not in actual_iterable:
+        return
+    default_message = '%s in %s' % (repr(expected_value), repr(actual_iterable))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+
 
 
