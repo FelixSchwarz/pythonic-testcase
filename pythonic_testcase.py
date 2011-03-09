@@ -51,3 +51,9 @@ def assert_equals(expected, actual, message=None):
 def assert_none(actual, message=None):
     assert_equals(None, actual, message=message)
 
+def assert_false(actual, message=None):
+    assert_equals(False, actual, message=message)
+
+def assert_true(actual, message=None):
+    assert_equals(True, actual, message=message)
+
