@@ -27,6 +27,14 @@
 # I'm happy to relicense this code if necessary for inclusion in other free 
 # software projects.
 
+# TODO / nice to have
+#  - raising assertions (with message building) should be unified
+#  - shorted tracebacks for cascaded calls so it's easier to look at the 
+#    traceback as a user 
+#      see jinja2/debug.py for some code that does such hacks:
+#          https://github.com/mitsuhiko/jinja2/blob/master/jinja2/debug.py
+
+
 __all__ = ['assert_equals', 'assert_none', 'assert_raises']
 
 
