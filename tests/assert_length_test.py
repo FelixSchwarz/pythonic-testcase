@@ -27,36 +27,30 @@
 # I'm happy to relicense this code if necessary for inclusion in other free 
 # software projects.
 
-__all__ = ['assert_equals', 'assert_none', 'assert_raises']
+from unittest import TestCase
+
+from pythonic_testcase import assert_equals, assert_length, assert_raises
+from tests.assert_raises_test import exception_message
 
 
-def assert_raises(exception, callable, message=None):
-    try:
-        callable()
-    except exception, e:
-        return e
-    default_message = u'%s not raised!' % exception.__name__
-    if message is None:
-        raise AssertionError(default_message)
-    raise AssertionError(default_message + ' ' + message)
+class AssertLengthTest(TestCase):
+    
+    def test_passes_if_length_matches_actual(self):
+        assert_length(0, [])
+        assert_length(1, ['foo'])
+    
+    def assert_fail(self, expected, actual, message=None):
+        return assert_raises(AssertionError, lambda: assert_length(expected, actual, message=message))
+    
+    def test_fails_if_length_does_not_match_equal(self):
+        self.assert_fail(2, ['foo'])
+    
+    def test_fails_with_sensible_default_error_message(self):
+        e = self.assert_fail(2, ['foo'])
+        assert "2 != 1" == exception_message(e), repr(exception_message(e))
+    
+    def test_can_specify_additional_custom_message(self):
+        e = self.assert_fail(2, ['foo'], message='Bar')
+        assert "2 != 1: Bar" == exception_message(e), repr(exception_message(e))
 
-def assert_equals(expected, actual, message=None):
-    if expected == actual:
-        return
-    default_message = '%s != %s' % (repr(expected), repr(actual))
-    if message is None:
-        raise AssertionError(default_message)
-    raise AssertionError(default_message + ': ' + message)
-
-def assert_none(actual, message=None):
-    assert_equals(None, actual, message=message)
-
-def assert_false(actual, message=None):
-    assert_equals(False, actual, message=message)
-
-def assert_true(actual, message=None):
-    assert_equals(True, actual, message=message)
-
-def assert_length(expected_length, actual_iterable, message=None):
-    assert_equals(expected_length, len(actual_iterable), message=message)
 
