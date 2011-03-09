@@ -76,7 +76,8 @@ def assert_not_equals(expected, actual, message=None):
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
 
-
+def assert_not_none(actual, message=None):
+    assert_not_equals(None, actual, message=message)
 
 
 
