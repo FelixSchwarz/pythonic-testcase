@@ -23,8 +23,9 @@
 # THE SOFTWARE.
 #
 # I believe the license above is permissible enough so you can actually 
-# use/relicense the code in any other project. If you need relicensing under any
-# other free software license, I'm happy to do that.
+# use/relicense the code in any other project without license proliferation. 
+# I'm happy to relicense this code if necessary for inclusion in other free 
+# software projects.
 
 from unittest import TestCase
 
