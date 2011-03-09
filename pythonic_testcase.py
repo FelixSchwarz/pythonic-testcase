@@ -68,3 +68,15 @@ def assert_true(actual, message=None):
 def assert_length(expected_length, actual_iterable, message=None):
     assert_equals(expected_length, len(actual_iterable), message=message)
 
+def assert_not_equals(expected, actual, message=None):
+    if expected != actual:
+        return
+    default_message = '%s == %s' % (repr(expected), repr(actual))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+
+
+
+
