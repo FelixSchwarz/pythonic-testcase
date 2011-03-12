@@ -29,8 +29,9 @@
 
 from unittest import TestCase
 
-from pythonic_testcase import assert_equals, assert_is_empty, assert_raises
+from pythonic_testcase import assert_equals, assert_is_empty, assert_is_not_empty, assert_raises
 from tests.assert_raises_test import exception_message
+
 
 class AssertIsEmptyTest(TestCase):
     
@@ -56,4 +57,31 @@ class AssertIsEmptyTest(TestCase):
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('bar', message='Foo')
         assert_equals("'bar' is not empty: Foo", exception_message(e))
+
+
+class AssertIsNotEmptyTest(TestCase):
+    
+    def test_passes_if_value_is_not_empty(self):
+        assert_is_not_empty((1,))
+        assert_is_not_empty([1])
+        assert_is_not_empty('foo')
+    
+    def assert_fail(self, value, message=None):
+        return assert_raises(AssertionError, lambda: assert_is_not_empty(value, message=message))
+        
+    def test_fails_if_value_is_empty(self):
+        self.assert_fail('')
+        self.assert_fail(())
+        self.assert_fail([])
+        self.assert_fail({})
+    
+    def test_fails_with_sensible_default_error_message(self):
+        # using a string here on purpose so we can check that repr is used in 
+        # exception message
+        e = self.assert_fail('')
+        assert_equals("'' is empty", exception_message(e))
+    
+    def test_can_specify_additional_custom_message(self):
+        e = self.assert_fail('', message='Foo')
+        assert_equals("'' is empty: Foo", exception_message(e))
 

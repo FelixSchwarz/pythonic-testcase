@@ -103,5 +103,18 @@ def assert_is_empty(actual, message=None):
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
 
+def assert_is_not_empty(actual, message=None):
+    if len(actual) > 0:
+        return
+    default_message = '%s is empty' % (repr(actual))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
 
 
+# almost_equals
+# isinstance
+# smaller_than
+# greater_than
+# is_callable
+# falsish, trueish
