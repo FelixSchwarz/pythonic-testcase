@@ -95,6 +95,13 @@ def assert_not_contains(expected_value, actual_iterable, message=None):
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
 
+def assert_is_empty(actual, message=None):
+    if len(actual) == 0:
+        return
+    default_message = '%s is not empty' % (repr(actual))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
 
 
 
