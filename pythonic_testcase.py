@@ -35,7 +35,7 @@
 #          https://github.com/mitsuhiko/jinja2/blob/master/jinja2/debug.py
 
 
-__all__ = ['assert_equals', 'assert_none', 'assert_raises']
+__all__ = ['assert_equals', 'assert_none', 'assert_not_equals', 'assert_raises']
 
 
 def assert_raises(exception, callable, message=None):
