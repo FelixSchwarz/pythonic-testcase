@@ -36,7 +36,8 @@
 
 from unittest import TestCase
 
-__all__ = ['assert_contains', 'assert_equals', 'assert_false', 'assert_falseish',
+__all__ = ['assert_callable', 'assert_contains', 'assert_equals', 
+           'assert_false', 'assert_falseish',
            'assert_isinstance', 'assert_length', 'assert_none', 
            'assert_not_none', 'assert_not_equals', 
            'assert_raises', 'assert_true', 'assert_trueish', 'PythonicTestCase', ]
@@ -131,6 +132,14 @@ def assert_is_not_empty(actual, message=None):
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
 
+def assert_callable(value, message=None):
+    if callable(value):
+        return
+    default_message = "%s is not callable" % repr(value)
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+    
 
 def assert_isinstance(value, klass, message=None):
     if isinstance(value, klass):
