@@ -34,8 +34,8 @@
 #      see jinja2/debug.py for some code that does such hacks:
 #          https://github.com/mitsuhiko/jinja2/blob/master/jinja2/debug.py
 
-__all__ = ['assert_contains', 'assert_equals', 'assert_false', 'assert_length',
-           'assert_none', 'assert_not_none', 'assert_not_equals', 
+__all__ = ['assert_contains', 'assert_equals', 'assert_false', 'assert_falseish',
+           'assert_length', 'assert_none', 'assert_not_none', 'assert_not_equals', 
            'assert_raises', 'assert_true', 'assert_trueish', ]
 
 
@@ -62,6 +62,14 @@ def assert_none(actual, message=None):
 
 def assert_false(actual, message=None):
     assert_equals(False, actual, message=message)
+
+def assert_falseish(actual, message=None):
+    if not actual:
+        return
+    default_message = '%s is not falseish' % repr(actual)
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
 
 def assert_true(actual, message=None):
     assert_equals(True, actual, message=message)
@@ -126,4 +134,4 @@ def assert_is_not_empty(actual, message=None):
 # smaller_than
 # greater_than
 # is_callable
-# falsish, trueish
+

@@ -29,7 +29,7 @@
 
 from unittest import TestCase
 
-from pythonic_testcase import assert_equals, assert_trueish, assert_raises
+from pythonic_testcase import assert_equals, assert_falseish, assert_trueish, assert_raises
 from tests.assert_raises_test import exception_message
 
 
@@ -60,5 +60,36 @@ class AssertTrueish(TestCase):
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail(u'', message='Bar')
         assert_equals("u'' is not trueish: Bar", exception_message(e))
+
+
+
+class AssertFalseish(TestCase):
+    
+    def test_passes_if_value_is_falseish(self):
+        assert_falseish(False)
+        assert_falseish(0)
+        assert_falseish('')
+        assert_falseish([])
+        assert_falseish({})
+    
+    def assert_fail(self, value, message=None):
+        return assert_raises(AssertionError, lambda: assert_falseish(value, message=message))
+        
+    def test_fails_if_value_is_not_falseish(self):
+        self.assert_fail(True)
+        self.assert_fail(1)
+        self.assert_fail('foo')
+        self.assert_fail([42])
+        self.assert_fail(42)
+
+    def test_fails_with_sensible_default_error_message(self):
+        # using a string here on purpose so we can check that repr is used in 
+        # exception message
+        e = self.assert_fail(u'foo')
+        assert_equals("u'foo' is not falseish", exception_message(e))
+    
+    def test_can_specify_additional_custom_message(self):
+        e = self.assert_fail(u'foo', message='Bar')
+        assert_equals("u'foo' is not falseish: Bar", exception_message(e))
 
 
