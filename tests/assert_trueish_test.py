@@ -45,8 +45,11 @@ class AssertTrueish(TestCase):
     def assert_fail(self, value, message=None):
         return assert_raises(AssertionError, lambda: assert_trueish(value, message=message))
         
-    def test_fails_if_value_is_none(self):
-        self.assert_fail(None)
+    def test_fails_if_value_is_not_trueish(self):
+        self.assert_fail(False)
+        self.assert_fail(0)
+        self.assert_fail('')
+        self.assert_fail([])
     
     def test_fails_with_sensible_default_error_message(self):
         # using a string here on purpose so we can check that repr is used in 
