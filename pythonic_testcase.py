@@ -34,9 +34,11 @@
 #      see jinja2/debug.py for some code that does such hacks:
 #          https://github.com/mitsuhiko/jinja2/blob/master/jinja2/debug.py
 
+from unittest import TestCase
+
 __all__ = ['assert_contains', 'assert_equals', 'assert_false', 'assert_falseish',
            'assert_length', 'assert_none', 'assert_not_none', 'assert_not_equals', 
-           'assert_raises', 'assert_true', 'assert_trueish', ]
+           'assert_raises', 'assert_true', 'assert_trueish', 'PythonicTestCase', ]
 
 
 def assert_raises(exception, callable, message=None):
@@ -128,6 +130,12 @@ def assert_is_not_empty(actual, message=None):
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
 
+
+class PythonicTestCase(TestCase):
+    def __getattr__(self, name):
+        if name in globals():
+            return globals()[name]
+        return getattr(super(PythonicTestCase, self), name)
 
 # almost_equals
 # isinstance
