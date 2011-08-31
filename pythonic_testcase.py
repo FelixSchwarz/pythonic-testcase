@@ -37,7 +37,8 @@
 from unittest import TestCase
 
 __all__ = ['assert_contains', 'assert_equals', 'assert_false', 'assert_falseish',
-           'assert_length', 'assert_none', 'assert_not_none', 'assert_not_equals', 
+           'assert_isinstance', 'assert_length', 'assert_none', 
+           'assert_not_none', 'assert_not_equals', 
            'assert_raises', 'assert_true', 'assert_trueish', 'PythonicTestCase', ]
 
 
@@ -129,6 +130,21 @@ def assert_is_not_empty(actual, message=None):
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
+
+
+def assert_isinstance(value, klass, message=None):
+    if isinstance(value, klass):
+        return
+
+    def class_name(instance_or_klass):
+        if isinstance(instance_or_klass, type):
+            return instance_or_klass.__name__
+        return instance_or_klass.__class__.__name__
+    default_message = "%s (%s) is not an instance of %s" % (repr(value), class_name(value), class_name(klass))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
 
 
 class PythonicTestCase(TestCase):
