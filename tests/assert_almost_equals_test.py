@@ -59,11 +59,11 @@ class AssertAlmostEquals(TestCase):
         e = self.assert_fail(2, 3)
         assert_equals('2 != 3', exception_message(e))
         e = self.assert_fail(2, 4, 1)
-        assert_equals(u'2 != 4 ± 1', exception_message(e))
+        assert_equals('2 != 4 +/- 1', exception_message(e))
     
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail(1, 3, max_delta=1, message='Bar')
-        assert_equals(u'1 != 3 ± 1: Bar', exception_message(e))
+        assert_equals('1 != 3 +/- 1: Bar', exception_message(e))
     
     def assert_fail(self, expected, actual, max_delta=None, message=None):
         assertion = lambda: assert_almost_equals(expected, actual, max_delta=max_delta, message=message)

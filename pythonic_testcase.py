@@ -106,7 +106,7 @@ def assert_almost_equals(expected, actual, max_delta=None, message=None):
     if max_delta is None:
         default_message = '%s != %s' % (repr(expected), repr(actual))
     else:
-        default_message = u'%s != %s ± %s' % (repr(expected), repr(actual), repr(max_delta))
+        default_message = '%s != %s +/- %s' % (repr(expected), repr(actual), repr(max_delta))
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
