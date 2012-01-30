@@ -2,7 +2,7 @@
 #
 # The MIT License
 # 
-# Copyright (c) 2011 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011-2012 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@
 from unittest import TestCase
 
 __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains', 
-           'assert_equals', 'assert_false', 'assert_falseish',
+           'assert_dict_contains', 'assert_equals', 'assert_false', 'assert_falseish',
            'assert_isinstance', 'assert_length', 'assert_none', 
            'assert_not_none', 'assert_not_equals', 
            'assert_raises', 'assert_true', 'assert_trueish', 'PythonicTestCase', ]
@@ -129,6 +129,16 @@ def assert_not_contains(expected_value, actual_iterable, message=None):
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
+
+def assert_dict_contains(expected_sub_dict, actual_super_dict, message=None):
+    for key, value in expected_sub_dict.items():
+        assert_contains(key, actual_super_dict, message=message)
+        if value != actual_super_dict[key]:
+            failure_message = '%(key)s=%(expected)s != %(key)s=%(actual)s' % \
+                dict(key=repr(key), expected=repr(value), actual=repr(actual_super_dict[key]))
+            if message is not None:
+                failure_message += ': ' + message
+            raise AssertionError(failure_message)
 
 def assert_is_empty(actual, message=None):
     if len(actual) == 0:
