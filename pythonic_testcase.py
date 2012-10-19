@@ -215,8 +215,8 @@ def create_spy(name=None):
         
         def assert_was_called_with(self, *args, **kwargs):
             assert_true(self.was_called, message=str(self))
-            assert_equals(self.args, args, message=str(self))
-            assert_equals(self.kwargs, kwargs, message=str(self))
+            assert_equals(args, self.args, message=str(self))
+            assert_equals(kwargs, self.kwargs, message=str(self))
         
         def assert_was_called(self):
             assert_true(self.was_called, message=str(self))
@@ -235,4 +235,5 @@ class PythonicTestCase(TestCase):
 
 # smaller_than
 # greater_than
+# is_callable
 
