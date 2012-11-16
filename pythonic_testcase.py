@@ -42,7 +42,8 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_isinstance', 'assert_is_empty', 'assert_is_not_empty', 
            'assert_length', 'assert_none', 
            'assert_not_contains', 'assert_not_none', 'assert_not_equals', 
-           'assert_raises', 'assert_true', 'assert_trueish', 'create_spy', 'PythonicTestCase', ]
+           'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish', 
+           'create_spy', 'PythonicTestCase', ]
 
 
 def assert_raises(exception, callable, message=None):
@@ -179,10 +180,18 @@ def assert_isinstance(value, klass, message=None):
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
 
-def assert_greater(smaller, greater, message=None):
+def assert_smaller(smaller, greater, message=None):
     if smaller < greater:
         return
-    default_message = '%s <= %s' % (repr(smaller), repr(greater))
+    default_message = '%s >= %s' % (repr(smaller), repr(greater))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+def assert_greater(greater, smaller, message=None):
+    if greater > smaller:
+        return
+    default_message = '%s <= %s' % (repr(greater), repr(smaller))
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -241,6 +250,5 @@ class PythonicTestCase(TestCase):
             return globals()[name]
         return getattr(super(PythonicTestCase, self), name)
 
-# smaller_than
 # is_callable
 
