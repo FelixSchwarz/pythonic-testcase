@@ -164,7 +164,6 @@ def assert_callable(value, message=None):
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
-    
 
 def assert_isinstance(value, klass, message=None):
     if isinstance(value, klass):
@@ -175,6 +174,14 @@ def assert_isinstance(value, klass, message=None):
             return instance_or_klass.__name__
         return instance_or_klass.__class__.__name__
     default_message = "%s (%s) is not an instance of %s" % (repr(value), class_name(value), class_name(klass))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+def assert_greater(smaller, greater, message=None):
+    if smaller < greater:
+        return
+    default_message = '%s <= %s' % (repr(smaller), repr(greater))
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -234,6 +241,5 @@ class PythonicTestCase(TestCase):
         return getattr(super(PythonicTestCase, self), name)
 
 # smaller_than
-# greater_than
 # is_callable
 
