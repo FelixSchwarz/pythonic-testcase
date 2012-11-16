@@ -38,6 +38,7 @@ from unittest import TestCase
 
 __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains', 
            'assert_dict_contains', 'assert_equals', 'assert_false', 'assert_falseish',
+           'assert_greater',
            'assert_isinstance', 'assert_is_empty', 'assert_is_not_empty', 
            'assert_length', 'assert_none', 
            'assert_not_contains', 'assert_not_none', 'assert_not_equals', 
