@@ -2,7 +2,7 @@
 #
 # The MIT License
 # 
-# Copyright (c) 2011-2012 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011-2014 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -34,24 +34,27 @@
 #      see jinja2/debug.py for some code that does such hacks:
 #          https://github.com/mitsuhiko/jinja2/blob/master/jinja2/debug.py
 
+from __future__ import unicode_literals
+
 from unittest import TestCase
 
-__all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains', 
+__all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_dict_contains', 'assert_equals', 'assert_false', 'assert_falseish',
            'assert_greater',
-           'assert_isinstance', 'assert_is_empty', 'assert_is_not_empty', 
+           'assert_isinstance', 'assert_is_empty', 'assert_is_not_empty',
            'assert_length', 'assert_none', 
-           'assert_not_contains', 'assert_not_none', 'assert_not_equals', 
-           'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish', 
-           'create_spy', 'PythonicTestCase', ]
+           'assert_not_contains', 'assert_not_none', 'assert_not_equals',
+           'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish',
+           'create_spy', 'PythonicTestCase',
+]
 
 
 def assert_raises(exception, callable, message=None):
     try:
         callable()
-    except exception, e:
+    except exception as e:
         return e
-    default_message = u'%s not raised!' % exception.__name__
+    default_message = '%s not raised!' % exception.__name__
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ' ' + message)
