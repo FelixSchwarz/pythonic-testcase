@@ -30,8 +30,7 @@
 from unittest import TestCase
 
 from pythonic_testcase import assert_equals, assert_falseish, assert_trueish, assert_raises
-from tests.assert_raises_test import exception_message
-from tests.util import UPREFIX
+from tests.util import exception_message, UPREFIX
 
 
 class AssertTrueish(TestCase):

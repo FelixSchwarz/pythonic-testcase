@@ -30,8 +30,7 @@
 from unittest import TestCase
 
 from pythonic_testcase import assert_equals, assert_isinstance, assert_raises
-from tests.assert_raises_test import exception_message
-from tests.util import basestring
+from tests.util import basestring, exception_message
 
 
 class AssertIsInstanceTest(TestCase):
