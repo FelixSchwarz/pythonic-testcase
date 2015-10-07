@@ -1,6 +1,10 @@
 Changelog
 ******************************
 
+1.0.2 (07.10.2015)
+====================
+- fix sdist by including Changelog.txt
+
 1.0.1 (07.10.2015)
 ====================
 - use gpg signing for pypi release (no code changes)
