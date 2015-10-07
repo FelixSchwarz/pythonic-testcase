@@ -2,7 +2,7 @@
 #
 # The MIT License
 # 
-# Copyright (c) 2011 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011, 2015 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@ from unittest import TestCase
 
 from pythonic_testcase import assert_equals, assert_falseish, assert_trueish, assert_raises
 from tests.assert_raises_test import exception_message
+from tests.util import UPREFIX
 
 
 class AssertTrueish(TestCase):
@@ -55,11 +56,11 @@ class AssertTrueish(TestCase):
         # using a string here on purpose so we can check that repr is used in 
         # exception message
         e = self.assert_fail(u'')
-        assert_equals("u'' is not trueish", exception_message(e))
+        assert_equals(UPREFIX+"'' is not trueish", exception_message(e))
     
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail(u'', message='Bar')
-        assert_equals("u'' is not trueish: Bar", exception_message(e))
+        assert_equals(UPREFIX+"'' is not trueish: Bar", exception_message(e))
 
 
 
@@ -86,10 +87,10 @@ class AssertFalseish(TestCase):
         # using a string here on purpose so we can check that repr is used in 
         # exception message
         e = self.assert_fail(u'foo')
-        assert_equals("u'foo' is not falseish", exception_message(e))
+        assert_equals(UPREFIX+"'foo' is not falseish", exception_message(e))
     
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail(u'foo', message='Bar')
-        assert_equals("u'foo' is not falseish: Bar", exception_message(e))
+        assert_equals(UPREFIX+"'foo' is not falseish: Bar", exception_message(e))
 
 

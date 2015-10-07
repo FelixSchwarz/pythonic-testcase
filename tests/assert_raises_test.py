@@ -2,7 +2,7 @@
 #
 # The MIT License
 # 
-# Copyright (c) 2011 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011, 2015 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -84,7 +84,7 @@ class AssertRaisesTest(TestCase):
     def test_fails_with_sensible_default_error_message(self):
         try:
             assert_raises(ValueError, self._good_callable())
-        except AssertionError, e:
+        except AssertionError as e:
             assert 'ValueError not raised!' == exception_message(e), repr(exception_message(e))
         else:
             self.fail('AssertionError not raised!')
@@ -92,7 +92,7 @@ class AssertRaisesTest(TestCase):
     def test_can_specify_additional_custom_message(self):
         try:
             assert_raises(ValueError, self._good_callable(), message='Foo')
-        except AssertionError, e:
+        except AssertionError as e:
             assert 'ValueError not raised! Foo' == exception_message(e), repr(exception_message(e))
         else:
             self.fail('AssertionError not raised!')

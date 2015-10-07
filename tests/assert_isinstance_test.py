@@ -2,7 +2,7 @@
 #
 # The MIT License
 # 
-# Copyright (c) 2011 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011, 2015 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@ from unittest import TestCase
 
 from pythonic_testcase import assert_equals, assert_isinstance, assert_raises
 from tests.assert_raises_test import exception_message
+from tests.util import basestring
 
 
 class AssertIsInstanceTest(TestCase):
