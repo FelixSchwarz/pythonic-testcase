@@ -2,7 +2,7 @@
 #
 # The MIT License
 # 
-# Copyright (c) 2011-2014 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011-2015 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -48,16 +48,40 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'create_spy', 'PythonicTestCase',
 ]
 
+class NotSet(object):
+    pass
 
-def assert_raises(exception, callable, message=None):
-    try:
+class AssertRaisesContext(object):
+    def __init__(self, exception, message):
+        self.exception = exception
+        self.message = message
+        self.caught_exception = NotSet
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exception, exception_value, traceback):
+        if exception is None:
+            default_message = '%s not raised!' % self.exception.__name__
+            if self.message is None:
+                raise AssertionError(default_message)
+            raise AssertionError(default_message + ' ' + self.message)
+
+        if not isinstance(exception_value, self.exception):
+            # unexpected exception, should propagate upwards without changes
+            return False
+        self.caught_exception = exception_value
+        return True
+
+
+def assert_raises(exception, callable=NotSet, message=None):
+    context = AssertRaisesContext(exception, message=message)
+    if callable is NotSet:
+        return context
+    with context as c:
         callable()
-    except exception as e:
-        return e
-    default_message = '%s not raised!' % exception.__name__
-    if message is None:
-        raise AssertionError(default_message)
-    raise AssertionError(default_message + ' ' + message)
+    print('returning %r' % c.caught_exception)
+    return c.caught_exception
 
 def assert_equals(expected, actual, message=None):
     if expected == actual:

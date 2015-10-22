@@ -1,6 +1,10 @@
 Changelog
 ******************************
 
+1.1.0 (??.??.2015)
+====================
+- assert_raises can return a context manager
+
 1.0.2 (07.10.2015)
 ====================
 - fix sdist by including Changelog.txt

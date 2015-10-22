@@ -92,3 +92,23 @@ class AssertRaisesTest(TestCase):
         else:
             self.fail('AssertionError not raised!')
 
+    def test_can_return_contextmanager(self):
+        with assert_raises(ValueError):
+            raise ValueError()
+
+        try:
+            with assert_raises(ValueError):
+                raise AssertionError()
+        except AssertionError:
+            pass
+        else:
+            self.fail('Did not raise ValueError')
+
+        try:
+            with assert_raises(ValueError):
+                pass
+        except AssertionError:
+            pass
+        else:
+            self.fail('No assertion raised')
+
