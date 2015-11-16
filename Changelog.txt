@@ -1,6 +1,10 @@
 Changelog
 ******************************
 
+1.2.0 (16.11.2015)
+====================
+- implement assert_not_raises
+
 1.1.0 (22.10.2015)
 ====================
 - assert_raises can return a context manager

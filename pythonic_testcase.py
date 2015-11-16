@@ -42,7 +42,8 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_dict_contains', 'assert_equals', 'assert_false', 'assert_falseish',
            'assert_greater',
            'assert_isinstance', 'assert_is_empty', 'assert_is_not_empty',
-           'assert_length', 'assert_none', 
+           'assert_length', 'assert_none',
+           'assert_not_raises',
            'assert_not_contains', 'assert_not_none', 'assert_not_equals',
            'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish',
            'create_spy', 'PythonicTestCase',
@@ -51,7 +52,8 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
 class NotSet(object):
     pass
 
-class AssertRaisesContext(object):
+
+class AssertionContext(object):
     def __init__(self, exception, message):
         self.exception = exception
         self.message = message
@@ -60,6 +62,7 @@ class AssertRaisesContext(object):
     def __enter__(self):
         return self
 
+class AssertRaisesContext(AssertionContext):
     def __exit__(self, exception, exception_value, traceback):
         if exception is None:
             default_message = '%s not raised!' % self.exception.__name__
@@ -81,6 +84,27 @@ def assert_raises(exception, callable=NotSet, message=None):
     with context as c:
         callable()
     return c.caught_exception
+
+
+class AssertNotRaisesContext(AssertionContext):
+    def __exit__(self, exception, exception_value, traceback):
+        if exception is None:
+            return True
+        elif not isinstance(exception_value, self.exception):
+            # unexpected exception, should propagate upwards without changes
+            return False
+        default_message = 'unexpected exception %r' % exception_value
+        if self.message is None:
+            raise AssertionError(default_message)
+        raise AssertionError(default_message + ': ' + self.message)
+
+def assert_not_raises(exception=Exception, callable=NotSet, message=None):
+    context = AssertNotRaisesContext(exception, message=message)
+    if callable is NotSet:
+        return context
+    with context as c:
+        callable()
+
 
 def assert_equals(expected, actual, message=None):
     if expected == actual:
