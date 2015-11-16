@@ -80,7 +80,6 @@ def assert_raises(exception, callable=NotSet, message=None):
         return context
     with context as c:
         callable()
-    print('returning %r' % c.caught_exception)
     return c.caught_exception
 
 def assert_equals(expected, actual, message=None):
