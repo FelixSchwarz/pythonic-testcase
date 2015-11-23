@@ -1,6 +1,10 @@
 Changelog
 ******************************
 
+1.2.1 (2015-11-23)
+====================
+- fix: assert_raises does not catch some (expected) exceptions on Python 2.6
+
 1.2.0 (16.11.2015)
 ====================
 - implement assert_not_raises

@@ -36,6 +36,7 @@
 
 from __future__ import unicode_literals
 
+from contextlib import contextmanager
 from unittest import TestCase
 
 __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
@@ -52,33 +53,25 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
 class NotSet(object):
     pass
 
+class _AssertionState(object):
+    def __init__(self):
+        self.caught_exception = None
 
-class AssertionContext(object):
-    def __init__(self, exception, message):
-        self.exception = exception
-        self.message = message
-        self.caught_exception = NotSet
-
-    def __enter__(self):
-        return self
-
-class AssertRaisesContext(AssertionContext):
-    def __exit__(self, exception, exception_value, traceback):
-        if exception is None:
-            default_message = '%s not raised!' % self.exception.__name__
-            if self.message is None:
-                raise AssertionError(default_message)
-            raise AssertionError(default_message + ' ' + self.message)
-
-        if not isinstance(exception_value, self.exception):
-            # unexpected exception, should propagate upwards without changes
-            return False
-        self.caught_exception = exception_value
-        return True
-
+@contextmanager
+def _assert_raises_context(exception, message):
+    context = _AssertionState()
+    try:
+        yield context
+    except exception as e:
+        context.caught_exception = e
+    else:
+        default_message = '%s not raised!' % exception.__name__
+        if message is None:
+            raise AssertionError(default_message)
+        raise AssertionError(default_message + ' ' + message)
 
 def assert_raises(exception, callable=NotSet, message=None):
-    context = AssertRaisesContext(exception, message=message)
+    context = _assert_raises_context(exception, message=message)
     if callable is NotSet:
         return context
     with context as c:
@@ -86,24 +79,23 @@ def assert_raises(exception, callable=NotSet, message=None):
     return c.caught_exception
 
 
-class AssertNotRaisesContext(AssertionContext):
-    def __exit__(self, exception, exception_value, traceback):
-        if exception is None:
-            return True
-        elif not isinstance(exception_value, self.exception):
-            # unexpected exception, should propagate upwards without changes
-            return False
-        default_message = 'unexpected exception %r' % exception_value
-        if self.message is None:
+@contextmanager
+def _assert_not_raises_context(exception, message):
+    context = _AssertionState()
+    try:
+        yield context
+    except exception as e:
+        default_message = 'unexpected exception %r' % e
+        if message is None:
             raise AssertionError(default_message)
-        raise AssertionError(default_message + ': ' + self.message)
+        raise AssertionError(default_message + ': ' + message)
 
 def assert_not_raises(exception=Exception, callable=NotSet, message=None):
-    context = AssertNotRaisesContext(exception, message=message)
+    context = _assert_not_raises_context(exception, message=message)
     if callable is NotSet:
         return context
-    with context as c:
-        callable()
+    with context:
+         callable()
 
 
 def assert_equals(expected, actual, message=None):

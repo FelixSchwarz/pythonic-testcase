@@ -55,6 +55,16 @@ class AssertRaisesTest(TestCase):
     
     def test_passes_if_callable_raised_exception(self):
         assert_raises(ValueError, self._fail_with(ValueError()))
+        # also test for Python 2.6 specific "behavior"/bug where
+        # Python 2.6 sometimes only passes a string (instead of
+        # the exception instance) to the context manager
+        # https://bugs.python.org/issue7853
+        def raises_valueerror():
+            from datetime import date
+            # not sure how to reproduce the issue generically but
+            # this date call triggers it at least.
+            date(2000, 12, 50)
+        assert_raises(ValueError, raises_valueerror)
     
     def test_returns_caught_exception_instance(self):
         expected_exception = ValueError('foobar')
