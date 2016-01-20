@@ -1,6 +1,12 @@
 Changelog
 ******************************
 
+1.2.2 (2016-01-20)
+====================
+- rename project to "PythonicTestcase" to workaround pip's automatic
+  replacement of underscores with dashes. This simplifies installation
+  from a private index.
+
 1.2.1 (2015-11-23)
 ====================
 - fix: assert_raises does not catch some (expected) exceptions on Python 2.6

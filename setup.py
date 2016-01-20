@@ -8,8 +8,8 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 setup(
-    name = 'pythonic_testcase',
-    version = '1.2.1',
+    name = 'PythonicTestcase',
+    version = '1.2.2',
     description = 'standalone pythonic assertions',
     long_description=(read('Changelog.txt')),
 
