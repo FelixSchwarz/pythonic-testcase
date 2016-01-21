@@ -2,7 +2,7 @@
 #
 # The MIT License
 # 
-# Copyright (c) 2011, 2015 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011, 2015-2016 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ from pythonic_testcase import assert_equals, assert_callable, assert_raises
 from tests.util import exception_message
 
 
-class AssertIsInstanceTest(TestCase):
+class AssertCallableTest(TestCase):
     
     def test_passes_if_object_is_callable(self):
         assert_callable(lambda: None)
