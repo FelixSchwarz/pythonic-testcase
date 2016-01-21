@@ -1,6 +1,11 @@
 Changelog
 ******************************
 
+1.3.x (2016-??-??)
+====================
+- export 'SkipTest' class via unittest (Python 2.7+), unittest2 or
+  nose.plugins.skip
+
 1.2.2 (2016-01-20)
 ====================
 - rename project to "PythonicTestcase" to workaround pip's automatic

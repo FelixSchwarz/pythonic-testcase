@@ -2,7 +2,7 @@
 #
 # The MIT License
 # 
-# Copyright (c) 2011-2015 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011-2016 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_not_raises',
            'assert_not_contains', 'assert_not_none', 'assert_not_equals',
            'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish',
-           'create_spy', 'PythonicTestCase',
+           'create_spy', 'PythonicTestCase', 'SkipTest',
 ]
 
 class NotSet(object):
@@ -285,11 +285,32 @@ def create_spy(name=None):
     
     return Spy(name=name)
 
+# --- SkipTest support -------------------------------------------------------
+# unfortunately SkipTest was only added in the unittest module for Python 2.7.
+# However nosetests supports this even on Python 2.6. And while we're at it,
+# let's also not forget about unittest2
+try:
+    from unittest.case import SkipTest
+except ImportError:
+    try:
+        from unittest2.case import SkipTest
+    except ImportError:
+        try:
+            from nose import SkipTest
+        except ImportError:
+            # Python 2.6 without unittest2 or nosetests - we can't win here
+            # but at least let's not break as long as the user won't try to
+            # use the SkipTest functionality
+            SkipTest = AssertionError
+def skipTest(*args, **kwargs):
+    raise SkipTest(*args, **kwargs)
 
+# --- unittest.TestCase alternative with pythonic names -----------------------
 class PythonicTestCase(TestCase):
     def __getattr__(self, name):
-        if name in globals():
-            return globals()[name]
+        globals_ = globals()
+        if name in globals_:
+            return globals_[name]
         return getattr(super(PythonicTestCase, self), name)
 
 # is_callable
