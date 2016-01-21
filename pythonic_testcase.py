@@ -95,7 +95,7 @@ def assert_not_raises(exception=Exception, callable=NotSet, message=None):
     if callable is NotSet:
         return context
     with context:
-         callable()
+        callable()
 
 
 def assert_equals(expected, actual, message=None):
