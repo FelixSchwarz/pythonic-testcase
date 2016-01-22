@@ -37,7 +37,10 @@
 from __future__ import unicode_literals
 
 from contextlib import contextmanager
+import functools
 from unittest import TestCase
+import sys
+
 
 __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_dict_contains', 'assert_equals', 'assert_false', 'assert_falseish',
@@ -47,7 +50,7 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_not_raises',
            'assert_not_contains', 'assert_not_none', 'assert_not_equals',
            'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish',
-           'create_spy', 'PythonicTestCase', 'SkipTest',
+           'create_spy', 'expect_failure', 'PythonicTestCase', 'SkipTest',
 ]
 
 class NotSet(object):
@@ -305,13 +308,54 @@ except ImportError:
 def skipTest(*args, **kwargs):
     raise SkipTest(*args, **kwargs)
 
+
+# --- expect_failure support --------------------------------------------------
+# unittest in Python 2.7 introduced the "expectedFailure" decorator. We should
+# provide support for Python 2.6 and I'd like to report failing "expected
+# failures" as "skipped", not "passing".
+
+IS_PYTHON3 = (sys.version_info >= (3, 0))
+IS_PYTHON34_OR_LATER = (sys.version_info >= (3, 4))
+try:
+    from unittest.case import _ExpectedFailure
+except ImportError:
+    _ExpectedFailure = SkipTest
+
+def expect_failure(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        try:
+            f(*args, **kwargs)
+        except AssertionError:
+            if IS_PYTHON34_OR_LATER:
+                raise
+            raise _ExpectedFailure(sys.exc_info())
+        raise AssertionError('expected failure but test seems to pass just fine')
+    if IS_PYTHON34_OR_LATER:
+        wrapper.__unittest_expecting_failure__ = True
+    return wrapper
+
+def add_expected_failure_py(result, test, err):
+    result.addSkip(test, str(err))
+
 # --- unittest.TestCase alternative with pythonic names -----------------------
+from types import MethodType
+
 class PythonicTestCase(TestCase):
     def __getattr__(self, name):
         globals_ = globals()
         if name in globals_:
             return globals_[name]
         return getattr(super(PythonicTestCase, self), name)
+
+    def run(self, result=None):
+        if (result is not None) and (not hasattr(result, 'addExpectedFailure')):
+            if IS_PYTHON3:
+                result.addExpectedFailure = MethodType(add_expected_failure_py, result)
+            else:
+                result.addExpectedFailure = MethodType(add_expected_failure_py, result, result.__class__)
+        return super(PythonicTestCase, self).run(result=result)
+
 
 # is_callable
 

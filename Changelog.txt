@@ -5,6 +5,10 @@ Changelog
 ====================
 - export 'SkipTest' class via unittest (Python 2.7+), unittest2 or
   nose.plugins.skip
+- support for "@expect_failure" decorator. It works very similar to unittest's
+  "@expectedFailure". However failing tests are reported as "skipped" not
+  "passing" if the test runner does not support "expected failures" (such as
+  nosetests 1.x).
 
 1.2.2 (2016-01-20)
 ====================
