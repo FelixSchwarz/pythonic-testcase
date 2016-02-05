@@ -1,19 +1,19 @@
 # -*- coding: UTF-8 -*-
 #
 # The MIT License
-# 
+#
 # Copyright (c) 2011-2016 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,15 +22,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #
-# I believe the license above is permissible enough so you can actually 
-# use/relicense the code in any other project without license proliferation. 
-# I'm happy to relicense this code if necessary for inclusion in other free 
+# I believe the license above is permissible enough so you can actually
+# use/relicense the code in any other project without license proliferation.
+# I'm happy to relicense this code if necessary for inclusion in other free
 # software projects.
 
 # TODO / nice to have
 #  - raising assertions (with message building) should be unified
-#  - shorted tracebacks for cascaded calls so it's easier to look at the 
-#    traceback as a user 
+#  - shorted tracebacks for cascaded calls so it's easier to look at the
+#    traceback as a user
 #      see jinja2/debug.py for some code that does such hacks:
 #          https://github.com/mitsuhiko/jinja2/blob/master/jinja2/debug.py
 
@@ -150,7 +150,7 @@ def assert_almost_equals(expected, actual, max_delta=None, message=None):
         return
     if (max_delta is not None) and (abs(expected - actual) <= max_delta):
         return
-    
+
     if max_delta is None:
         default_message = '%s != %s' % (repr(expected), repr(actual))
     else:
@@ -246,46 +246,46 @@ def create_spy(name=None):
         def __init__(self, name=None):
             self.name = name
             self.reset()
-        
+
         # pretend to be a python method / function
         @property
         def func_name(self):
             return self.name
-        
+
         def __str__(self):
             if self.was_called:
                 return "<Spy(%s) was called with args: %s kwargs: %s>" \
                     % (self.name, self.args, self.kwargs)
             else:
                 return "<Spy(%s) was not called yet>" % self.name
-        
+
         def reset(self):
             self.args = None
             self.kwargs = None
             self.was_called = False
             self.return_value = None
-        
+
         def __call__(self, *args, **kwargs):
             self.args = args
             self.kwargs = kwargs
             self.was_called = True
             return self.return_value
-        
+
         def and_return(self, value):
             self.return_value = value
             return self
-        
+
         def assert_was_called_with(self, *args, **kwargs):
             assert_true(self.was_called, message=str(self))
             assert_equals(args, self.args, message=str(self))
             assert_equals(kwargs, self.kwargs, message=str(self))
-        
+
         def assert_was_called(self):
             assert_true(self.was_called, message=str(self))
-            
+
         def assert_was_not_called(self):
             assert_false(self.was_called, message=str(self))
-    
+
     return Spy(name=name)
 
 # --- SkipTest support -------------------------------------------------------
