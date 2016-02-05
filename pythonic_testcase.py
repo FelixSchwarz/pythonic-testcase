@@ -53,6 +53,14 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'create_spy', 'expect_failure', 'PythonicTestCase', 'SkipTest',
 ]
 
+# This simple line instructs some test runners (e.g. stock unittest, nosetests,
+# nose2) to suppress all lines referring to code within this module.
+# This is helpful because users are usually not interested in the internal
+# implementation of PythonicTestcase. Instead they'll see their assertion code
+# more prominently.
+# Set this line to False if you develop/debug the actual PythonicTestcase code.
+__unittest = True
+
 class NotSet(object):
     pass
 

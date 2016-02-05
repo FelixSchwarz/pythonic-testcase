@@ -1,6 +1,11 @@
 Changelog
 ******************************
 
+1.3.x (2016-??-??)
+====================
+- instruct test runners to suppress traceback lines from PythonicTestcase when
+  displaying a test failure.
+
 1.3.0 (2016-01-23)
 ====================
 - export 'SkipTest' class via unittest (Python 2.7+), unittest2 or
