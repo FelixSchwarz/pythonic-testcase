@@ -9,7 +9,7 @@ def read(*rnames):
 
 setup(
     name = 'PythonicTestcase',
-    version = '1.3.1',
+    version = '1.3.2dev',
     description = 'standalone pythonic assertions',
     long_description=(read('Changelog.txt')),
 
