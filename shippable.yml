@@ -9,4 +9,8 @@ python:
  - "pypy"
  - "pypy3"
 
-script: nosetests
+before_script:
+ - mkdir -p shippable/testresults
+
+script:
+ - nosetests --with-xunit --xunit-file=shippable/testresults/nosetests.xml
