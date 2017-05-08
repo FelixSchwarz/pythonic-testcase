@@ -1,6 +1,10 @@
 Changelog
 ******************************
 
+1.3.? (2017-??-??)
+====================
+- no change so far
+
 1.3.2 (2017-05-08)
 ====================
 - assert_length() now consumes generators if this is necessary to get the length
