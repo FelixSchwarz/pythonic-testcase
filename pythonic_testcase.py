@@ -2,7 +2,7 @@
 #
 # The MIT License
 #
-# Copyright (c) 2011-2016 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011-2017 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -143,7 +143,11 @@ def assert_trueish(actual, message=None):
     raise AssertionError(default_message + ': ' + message)
 
 def assert_length(expected_length, actual_iterable, message=None):
-    assert_equals(expected_length, len(actual_iterable), message=message)
+    try:
+        length_iterable = len(actual_iterable)
+    except TypeError:
+        length_iterable = len(tuple(actual_iterable))
+    assert_equals(expected_length, length_iterable, message=message)
 
 def assert_not_equals(expected, actual, message=None):
     if expected != actual:

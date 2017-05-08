@@ -2,7 +2,7 @@
 #
 # The MIT License
 #
-# Copyright (c) 2011, 2015 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011, 2015, 2017 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,15 @@ class AssertLengthTest(TestCase):
     def test_passes_if_length_matches_actual(self):
         assert_length(0, [])
         assert_length(1, ['foo'])
+
+    def test_can_consume_generator_if_necessary(self):
+        def generator():
+            for i in (1, 2, 3):
+                yield i
+        assert_length(3, generator())
+        generator_ = generator()
+        assert_length(3, generator_)
+        assert_length(0, generator_)
 
     def assert_fail(self, expected, actual, message=None):
         return assert_raises(AssertionError, lambda: assert_length(expected, actual, message=message))
