@@ -50,7 +50,8 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_not_raises',
            'assert_not_contains', 'assert_not_none', 'assert_not_equals',
            'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish',
-           'create_spy', 'expect_failure', 'PythonicTestCase', 'SkipTest',
+           'create_spy', 'expect_failure', 'PythonicTestCase',
+           'skip_test', 'skipTest', 'SkipTest',
 ]
 
 # This simple line instructs some test runners (e.g. stock unittest, nosetests,
@@ -317,9 +318,9 @@ except ImportError:
             # but at least let's not break as long as the user won't try to
             # use the SkipTest functionality
             SkipTest = AssertionError
-def skipTest(*args, **kwargs):
+def skip_test(*args, **kwargs):
     raise SkipTest(*args, **kwargs)
-
+skipTest = skip_test
 
 # --- expect_failure support --------------------------------------------------
 # unittest in Python 2.7 introduced the "expectedFailure" decorator. We should
