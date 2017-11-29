@@ -320,6 +320,8 @@ except ImportError:
             SkipTest = AssertionError
 def skip_test(*args, **kwargs):
     raise SkipTest(*args, **kwargs)
+# ensure that nosetests does not try to run this function as "test"
+skip_test.__test__ = False
 skipTest = skip_test
 
 # --- expect_failure support --------------------------------------------------
