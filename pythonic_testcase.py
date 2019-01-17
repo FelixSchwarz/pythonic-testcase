@@ -22,6 +22,8 @@ import sys
 
 __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_dict_contains', 'assert_equals', 'assert_false', 'assert_falseish',
+           'assert_file_exists',
+           'assert_file_not_exists',
            'assert_greater',
            'assert_is',
            'assert_is_not',
@@ -267,6 +269,26 @@ def assert_path_not_exists(path, message=None):
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
+
+def assert_file_exists(path, message=None):
+    if os.path.isfile(path):
+        return
+    if os.path.exists(path) and os.path.isdir(path):
+        default_message = '%r is a directory' % (path,)
+    else:
+        default_message = 'file %r does not exist' % (path,)
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+def assert_file_not_exists(path, message=None):
+    if not os.path.isfile(path):
+        return
+    default_message = 'file %r exists' % (path,)
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
 
 def create_spy(name=None):
     class Spy(object):
