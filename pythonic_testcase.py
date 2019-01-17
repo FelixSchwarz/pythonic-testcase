@@ -30,6 +30,7 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_not_raises',
            'assert_not_contains', 'assert_not_none', 'assert_not_equals',
            'assert_path_exists',
+           'assert_path_not_exists',
            'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish',
            'create_spy', 'expect_failure', 'PythonicTestCase',
            'skip_test', 'skipTest', 'SkipTest',
@@ -255,6 +256,14 @@ def assert_path_exists(path, message=None):
     if os.path.exists(path):
         return
     default_message = 'path %r does not exist' % (path,)
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+def assert_path_not_exists(path, message=None):
+    if not os.path.exists(path):
+        return
+    default_message = 'path %r exists' % (path,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
