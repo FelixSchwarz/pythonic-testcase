@@ -32,15 +32,17 @@ class AssertDictContainsTest(TestCase):
 
     def test_fails_with_sensible_default_error_message(self):
         e = self.assert_fail({'foo': '42'}, {})
-        assert_equals("'foo' not in {}", exception_message(e))
+        assert_equals("%r not in {}" % 'foo', exception_message(e))
 
         e = self.assert_fail({'foo': 21}, {'foo': 42})
-        assert_equals("'foo'=21 != 'foo'=42", exception_message(e))
+        expected_error = "%r=21 != %r=42" % ('foo', 'foo')
+        assert_equals(expected_error, exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail({'foo': '42'}, {}, message='Bar')
-        assert_equals("'foo' not in {}: Bar", exception_message(e))
+        assert_equals("%r not in {}: Bar" % 'foo', exception_message(e))
 
         e = self.assert_fail({'foo': 21}, {'foo': 42}, message='Bar')
-        assert_equals("'foo'=21 != 'foo'=42: Bar", exception_message(e))
+        expected_error = "%r=21 != %r=42: Bar" % ('foo', 'foo')
+        assert_equals(expected_error, exception_message(e))
 

@@ -26,7 +26,8 @@ class AssertEqualsTest(TestCase):
         # using a string here on purpose so we can check that repr is used in
         # exception message
         e = assert_raises(AssertionError, lambda: assert_equals('foo', 'bar'))
-        assert "'foo' != 'bar'" == exception_message(e), repr(exception_message(e))
+        expected_str = '%r != %r' % ('foo', 'bar')
+        assert expected_str == exception_message(e), repr(exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = assert_raises(AssertionError, lambda: assert_equals(1, 2, message='foo'))

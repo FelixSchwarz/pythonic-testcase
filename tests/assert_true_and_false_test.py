@@ -27,11 +27,11 @@ class AssertTrueTest(TestCase):
         # using a string here on purpose so we can check that repr is used in
         # exception message
         e = self.assert_fail('bar')
-        assert_equals("True != 'bar'", exception_message(e))
+        assert_equals("True != %r" % 'bar', exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('bar', message='Foo')
-        assert_equals("True != 'bar': Foo", exception_message(e))
+        assert_equals("True != %r: Foo" % 'bar', exception_message(e))
 
 
 class AssertFalseTest(TestCase):
@@ -51,9 +51,9 @@ class AssertFalseTest(TestCase):
         # using a string here on purpose so we can check that repr is used in
         # exception message
         e = self.assert_fail('bar')
-        assert_equals("False != 'bar'", exception_message(e))
+        assert_equals("False != %r" % 'bar', exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('bar', message='Foo')
-        assert_equals("False != 'bar': Foo", exception_message(e))
+        assert_equals("False != %r: Foo" % 'bar', exception_message(e))
 

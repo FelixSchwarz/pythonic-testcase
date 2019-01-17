@@ -24,9 +24,11 @@ class AssertIsInstanceTest(TestCase):
 
     def test_fails_with_sensible_default_error_message(self):
         e = self.assert_fail('bar', list)
-        assert_equals("'bar' (str) is not an instance of list", exception_message(e))
+        actual_str = "%r (%s)" % ('bar', ''.__class__.__name__)
+        assert_equals(actual_str + " is not an instance of list", exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('bar', list, message='Bar')
-        assert_equals("'bar' (str) is not an instance of list: Bar", exception_message(e))
+        actual_str = "%r (%s)" % ('bar', ''.__class__.__name__)
+        assert_equals(actual_str + " is not an instance of list: Bar", exception_message(e))
 

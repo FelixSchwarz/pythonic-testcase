@@ -26,9 +26,9 @@ class AssertNotEqualsTest(TestCase):
         # using a string here on purpose so we can check that repr is used in
         # exception message
         e = self.assert_fail('foo', 'foo')
-        assert_equals("'foo' == 'foo'", exception_message(e))
+        assert_equals("%r == %r" % ('foo', 'foo'), exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('foo', 'foo', message='Bar')
-        assert_equals("'foo' == 'foo': Bar", exception_message(e))
+        assert_equals("%r == %r: Bar" % ('foo', 'foo'), exception_message(e))
 

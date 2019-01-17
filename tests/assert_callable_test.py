@@ -30,5 +30,6 @@ class AssertCallableTest(TestCase):
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('bar', message='Bar')
-        assert_equals("'bar' is not callable: Bar", exception_message(e))
+        expected_error = "%r is not callable: Bar" % ('bar', )
+        assert_equals(expected_error, exception_message(e))
 

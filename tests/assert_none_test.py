@@ -28,9 +28,9 @@ class AssertNoneTest(TestCase):
         # using a string here on purpose so we can check that repr is used in
         # exception message
         e = self.assert_fail('bar')
-        assert_equals("None != 'bar'", exception_message(e))
+        assert_equals("None != %r" % 'bar', exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('bar', message='Foo')
-        assert_equals("None != 'bar': Foo", exception_message(e))
+        assert_equals("None != %r: Foo" % 'bar', exception_message(e))
 

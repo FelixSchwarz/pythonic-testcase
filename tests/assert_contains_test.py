@@ -28,11 +28,12 @@ class AssertContainsTest(TestCase):
         # using a string here on purpose so we can check that repr is used in
         # exception message
         e = self.assert_fail('foo', [])
-        assert_equals("'foo' not in []", exception_message(e))
+        assert_equals("%r not in []" % 'foo', exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('foo', [], message='Bar')
-        assert_equals("'foo' not in []: Bar", exception_message(e))
+        expected_error = "%r not in []: Bar" % ('foo', )
+        assert_equals(expected_error, exception_message(e))
 
 
 class AssertNotContainsTest(TestCase):
@@ -50,9 +51,11 @@ class AssertNotContainsTest(TestCase):
         # using a string here on purpose so we can check that repr is used in
         # exception message
         e = self.assert_fail('foo', ['foo'])
-        assert_equals("'foo' in ['foo']", exception_message(e))
+        expected_error = "%r in [%r]" % ('foo', 'foo')
+        assert_equals(expected_error, exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('foo', ['foo'], message='Bar')
-        assert_equals("'foo' in ['foo']: Bar", exception_message(e))
+        expected_error = "%r in [%r]: Bar" % ('foo', 'foo')
+        assert_equals(expected_error, exception_message(e))
 

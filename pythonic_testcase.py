@@ -257,7 +257,7 @@ def assert_greater(greater, smaller, message=None):
 def assert_path_exists(path, message=None):
     if os.path.exists(path):
         return
-    default_message = 'path %r does not exist' % (path,)
+    default_message = "path '%s' does not exist" % (path,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -265,7 +265,7 @@ def assert_path_exists(path, message=None):
 def assert_path_not_exists(path, message=None):
     if not os.path.exists(path):
         return
-    default_message = 'path %r exists' % (path,)
+    default_message = "path '%s' exists" % (path,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -274,9 +274,9 @@ def assert_file_exists(path, message=None):
     if os.path.isfile(path):
         return
     if os.path.exists(path) and os.path.isdir(path):
-        default_message = '%r is a directory' % (path,)
+        default_message = "'%s' is a directory" % (path,)
     else:
-        default_message = 'file %r does not exist' % (path,)
+        default_message = "file '%s' does not exist" % (path,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -284,7 +284,7 @@ def assert_file_exists(path, message=None):
 def assert_file_not_exists(path, message=None):
     if not os.path.isfile(path):
         return
-    default_message = 'file %r exists' % (path,)
+    default_message = "file '%s' exists" % (path,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
