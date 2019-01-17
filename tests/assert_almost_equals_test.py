@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from unittest import TestCase
 
 from pythonic_testcase import assert_equals, assert_almost_equals, assert_raises
-from tests.util import exception_message
+from .util import exception_message
 
 
 class AssertAlmostEquals(TestCase):

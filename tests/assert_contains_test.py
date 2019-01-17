@@ -9,7 +9,7 @@ from unittest import TestCase
 
 from pythonic_testcase import assert_contains, assert_equals, \
     assert_not_contains, assert_raises
-from tests.util import exception_message
+from .util import exception_message
 
 
 class AssertContainsTest(TestCase):

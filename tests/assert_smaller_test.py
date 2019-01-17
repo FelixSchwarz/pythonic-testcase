@@ -7,7 +7,7 @@ from __future__ import absolute_import, unicode_literals, print_function
 from unittest import TestCase
 
 from pythonic_testcase import assert_equals, assert_smaller, assert_raises
-from tests.util import exception_message
+from .util import exception_message
 
 
 class AssertSmallerTest(TestCase):

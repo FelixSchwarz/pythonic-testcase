@@ -8,7 +8,7 @@ from __future__ import absolute_import, unicode_literals, print_function
 from unittest import TestCase
 
 from pythonic_testcase import assert_equals, assert_isinstance, assert_raises
-from tests.util import basestring, exception_message
+from .util import basestring, exception_message
 
 
 class AssertIsInstanceTest(TestCase):
