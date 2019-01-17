@@ -5,6 +5,7 @@
 
 import sys
 
+
 __all__ = ['basestring', 'exception_message', 'UPREFIX']
 
 UPREFIX = 'u' if (sys.version_info < (3, 0)) else ''

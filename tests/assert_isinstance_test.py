@@ -10,7 +10,6 @@ from tests.util import basestring, exception_message
 
 
 class AssertIsInstanceTest(TestCase):
-
     def test_passes_if_object_is_instance_of_class(self):
         assert_isinstance({}, dict)
         assert_isinstance('', basestring)

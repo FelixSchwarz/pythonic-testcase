@@ -11,7 +11,6 @@ from tests.util import exception_message
 
 
 class AssertAlmostEquals(TestCase):
-
     def test_passes_if_values_are_equal(self):
         assert_almost_equals(1, 1)
         assert_almost_equals('foo', 'foo')
@@ -44,5 +43,4 @@ class AssertAlmostEquals(TestCase):
     def assert_fail(self, expected, actual, max_delta=None, message=None):
         assertion = lambda: assert_almost_equals(expected, actual, max_delta=max_delta, message=message)
         return assert_raises(AssertionError, assertion)
-
 

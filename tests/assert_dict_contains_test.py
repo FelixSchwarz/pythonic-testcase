@@ -10,7 +10,6 @@ from tests.util import exception_message
 
 
 class AssertDictContainsTest(TestCase):
-
     def test_passes_if_dict_contains_subdict(self):
         assert_dict_contains({'foo': 42}, {'foo': 42})
         assert_dict_contains({'foo': 42, 'bar': 21}, {'foo': 42, 'bar': 21})
@@ -42,5 +41,4 @@ class AssertDictContainsTest(TestCase):
 
         e = self.assert_fail({'foo': 21}, {'foo': 42}, message='Bar')
         assert_equals("'foo'=21 != 'foo'=42: Bar", exception_message(e))
-
 

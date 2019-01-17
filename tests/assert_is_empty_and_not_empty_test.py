@@ -10,7 +10,6 @@ from tests.util import exception_message
 
 
 class AssertIsEmptyTest(TestCase):
-
     def test_passes_if_value_is_empty(self):
         assert_is_empty('')
         assert_is_empty(())
@@ -36,7 +35,6 @@ class AssertIsEmptyTest(TestCase):
 
 
 class AssertIsNotEmptyTest(TestCase):
-
     def test_passes_if_value_is_not_empty(self):
         assert_is_not_empty((1,))
         assert_is_not_empty([1])

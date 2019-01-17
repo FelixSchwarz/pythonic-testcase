@@ -10,7 +10,6 @@ from tests.util import exception_message
 
 
 class AssertGreaterTest(TestCase):
-
     def test_passes_if_value_is_greater(self):
         assert_greater(4, 1)
         assert_greater(0, -1)

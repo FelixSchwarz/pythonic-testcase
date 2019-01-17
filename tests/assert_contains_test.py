@@ -11,7 +11,6 @@ from tests.util import exception_message
 
 
 class AssertContainsTest(TestCase):
-
     def test_passes_if_iterable_contains_value(self):
         assert_contains(True, ['foo', True])
         assert_contains(True, ('foo', True))
@@ -35,7 +34,6 @@ class AssertContainsTest(TestCase):
 
 
 class AssertNotContainsTest(TestCase):
-
     def test_passes_if_iterable_does_not_contain_value(self):
         assert_not_contains(None, ['foo', True])
         assert_not_contains('bar', ('foo', True))
@@ -55,5 +53,4 @@ class AssertNotContainsTest(TestCase):
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('foo', ['foo'], message='Bar')
         assert_equals("'foo' in ['foo']: Bar", exception_message(e))
-
 

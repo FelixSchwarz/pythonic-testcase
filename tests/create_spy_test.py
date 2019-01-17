@@ -7,8 +7,8 @@ from unittest import TestCase
 
 from pythonic_testcase import create_spy, assert_raises, assert_equals
 
-class CreateSpyTest(TestCase):
 
+class CreateSpyTest(TestCase):
     def test_spy_knows_if_it_was_called(self):
         spy = create_spy()
         spy.assert_was_not_called()

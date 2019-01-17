@@ -9,7 +9,6 @@ from tests.util import exception_message
 
 
 class AssertSmallerTest(TestCase):
-
     def test_passes_if_value_is_smaller(self):
         assert_smaller(1, 4)
         assert_smaller(-1, 0)

@@ -81,4 +81,3 @@ class AssertNotRaisesTest(TestCase):
             raise exception
         return failing_callable
 
-

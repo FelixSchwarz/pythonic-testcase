@@ -12,7 +12,6 @@ from tests.util import exception_message
 class AssertRaisesTest(TestCase):
     # assert_raises is the basis of all testing. Therefore this test case must
     # not use any other helper method.
-
     def _good_callable(self):
         return lambda: None
 

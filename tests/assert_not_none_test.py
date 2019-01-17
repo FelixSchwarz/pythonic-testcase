@@ -10,7 +10,6 @@ from tests.util import exception_message
 
 
 class AssertNotNoneTest(TestCase):
-
     def test_passes_if_value_is_not_none(self):
         assert_not_none(True)
         assert_not_none(False)
@@ -31,5 +30,4 @@ class AssertNotNoneTest(TestCase):
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail(None, message='Bar')
         assert_equals("None == None: Bar", exception_message(e))
-
 

@@ -9,7 +9,6 @@ from tests.util import exception_message
 
 
 class AssertTrueTest(TestCase):
-
     def test_passes_if_value_is_true(self):
         assert_true(True)
 
@@ -34,7 +33,6 @@ class AssertTrueTest(TestCase):
 
 
 class AssertFalseTest(TestCase):
-
     def test_passes_if_value_is_false(self):
         assert_false(False)
 

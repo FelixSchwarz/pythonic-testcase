@@ -10,7 +10,6 @@ from tests.util import exception_message
 
 
 class AssertLengthTest(TestCase):
-
     def test_passes_if_length_matches_actual(self):
         assert_length(0, [])
         assert_length(1, ['foo'])
@@ -37,5 +36,4 @@ class AssertLengthTest(TestCase):
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail(2, ['foo'], message='Bar')
         assert "2 != 1: Bar" == exception_message(e), repr(exception_message(e))
-
 

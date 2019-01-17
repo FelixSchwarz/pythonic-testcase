@@ -10,7 +10,6 @@ from tests.util import exception_message, UPREFIX
 
 
 class AssertTrueish(TestCase):
-
     def test_passes_if_value_is_trueish(self):
         assert_trueish(True)
         assert_trueish(1)
@@ -40,7 +39,6 @@ class AssertTrueish(TestCase):
 
 
 class AssertFalseish(TestCase):
-
     def test_passes_if_value_is_falseish(self):
         assert_falseish(False)
         assert_falseish(0)
@@ -67,5 +65,4 @@ class AssertFalseish(TestCase):
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail(u'foo', message='Bar')
         assert_equals(UPREFIX+"'foo' is not falseish: Bar", exception_message(e))
-
 

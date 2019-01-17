@@ -10,7 +10,6 @@ from tests.util import exception_message
 
 
 class AssertCallableTest(TestCase):
-
     def test_passes_if_object_is_callable(self):
         assert_callable(lambda: None)
         assert_callable(self.assert_fail)

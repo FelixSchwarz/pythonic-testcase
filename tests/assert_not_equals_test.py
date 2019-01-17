@@ -10,7 +10,6 @@ from tests.util import exception_message
 
 
 class AssertNotEqualsTest(TestCase):
-
     def test_passes_if_values_are_not_equal(self):
         assert_not_equals(True,  False)
 
@@ -30,5 +29,4 @@ class AssertNotEqualsTest(TestCase):
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('foo', 'foo', message='Bar')
         assert_equals("'foo' == 'foo': Bar", exception_message(e))
-
 

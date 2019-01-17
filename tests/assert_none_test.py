@@ -8,8 +8,8 @@ from unittest import TestCase
 from pythonic_testcase import assert_equals, assert_none, assert_raises
 from tests.util import exception_message
 
-class AssertNoneTest(TestCase):
 
+class AssertNoneTest(TestCase):
     def test_passes_if_value_is_none(self):
         assert_none(None)
 
