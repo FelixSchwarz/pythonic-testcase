@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2016 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 
+from __future__ import absolute_import, unicode_literals, print_function
+
 from pythonic_testcase import assert_raises, expect_failure, PythonicTestCase, _ExpectedFailure
 
 

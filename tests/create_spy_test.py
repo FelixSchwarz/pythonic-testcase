@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2012 Robert Buchholz <rbu@goodpoint.de>
 
+from __future__ import absolute_import, unicode_literals, print_function
+
 from unittest import TestCase
 
 from pythonic_testcase import create_spy, assert_raises, assert_equals

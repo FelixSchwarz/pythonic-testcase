@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2015 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 
+from __future__ import absolute_import, unicode_literals, print_function
+
 import sys
 
 

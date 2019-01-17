@@ -11,7 +11,7 @@
 #      see jinja2/debug.py for some code that does such hacks:
 #          https://github.com/mitsuhiko/jinja2/blob/master/jinja2/debug.py
 
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals, print_function
 
 from contextlib import contextmanager
 import functools
