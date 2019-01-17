@@ -11,7 +11,7 @@ def read(*rnames):
 
 setup(
     name = 'PythonicTestcase',
-    version = '1.3.4',
+    version = '1.4.0',
     description = 'standalone pythonic assertions',
     long_description=(read('Changelog.txt')),
 
