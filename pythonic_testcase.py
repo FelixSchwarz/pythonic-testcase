@@ -15,6 +15,7 @@ from __future__ import absolute_import, unicode_literals, print_function
 
 from contextlib import contextmanager
 import functools
+import os
 from unittest import TestCase
 import sys
 
@@ -28,6 +29,7 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_length', 'assert_none',
            'assert_not_raises',
            'assert_not_contains', 'assert_not_none', 'assert_not_equals',
+           'assert_path_exists',
            'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish',
            'create_spy', 'expect_failure', 'PythonicTestCase',
            'skip_test', 'skipTest', 'SkipTest',
@@ -245,6 +247,14 @@ def assert_greater(greater, smaller, message=None):
     if greater > smaller:
         return
     default_message = '%s <= %s' % (repr(greater), repr(smaller))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+def assert_path_exists(path, message=None):
+    if os.path.exists(path):
+        return
+    default_message = 'path %r does not exist' % (path,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
