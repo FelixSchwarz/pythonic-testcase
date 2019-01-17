@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2011-2017 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c)      2012 Robert Buchholz <rbu@goodpoint.de>
 
 # TODO / nice to have
 #  - raising assertions (with message building) should be unified

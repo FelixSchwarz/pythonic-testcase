@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2011 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2012 Robert Buchholz <rbu@goodpoint.de>
 
 from unittest import TestCase
 
