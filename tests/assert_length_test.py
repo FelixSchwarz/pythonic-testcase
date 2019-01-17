@@ -5,7 +5,7 @@
 
 from unittest import TestCase
 
-from pythonic_testcase import assert_equals, assert_length, assert_raises
+from pythonic_testcase import assert_length, assert_raises
 from tests.util import exception_message
 
 
