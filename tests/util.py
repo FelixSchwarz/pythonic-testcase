@@ -18,7 +18,7 @@ except NameError:
     basestring = str
 
 def exception_message(exception):
-    if len(exception.args) == 0:
+    if (exception is None) or (len(exception.args) == 0):
         return None
     return exception.args[0]
 

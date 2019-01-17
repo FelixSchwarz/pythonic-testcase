@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2011-2017 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
+# Copyright (c) 2011-2017, 2019 Felix Schwarz <felix.schwarz@oss.schwarz.eu>
 # Copyright (c)      2012 Robert Buchholz <rbu@goodpoint.de>
 
 # TODO / nice to have
@@ -22,6 +22,7 @@ import sys
 __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_dict_contains', 'assert_equals', 'assert_false', 'assert_falseish',
            'assert_greater',
+           'assert_is',
            'assert_isinstance', 'assert_is_empty', 'assert_is_not_empty',
            'assert_length', 'assert_none',
            'assert_not_raises',
@@ -91,6 +92,14 @@ def assert_equals(expected, actual, message=None):
     if expected == actual:
         return
     default_message = '%s != %s' % (repr(expected), repr(actual))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+def assert_is(expr1, expr2, message=None):
+    if expr1 is expr2:
+        return
+    default_message = '%s is not %s' % (repr(expr1), repr(expr2))
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
