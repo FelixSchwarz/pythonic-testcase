@@ -144,11 +144,15 @@ def assert_trueish(actual, message=None):
     raise AssertionError(default_message + ': ' + message)
 
 def assert_length(expected_length, actual_iterable, message=None):
-    try:
-        length_iterable = len(actual_iterable)
-    except TypeError:
-        length_iterable = len(tuple(actual_iterable))
+    length_iterable = _get_length(actual_iterable)
     assert_equals(expected_length, length_iterable, message=message)
+
+def _get_length(actual_iterable):
+    try:
+        nr_items = len(actual_iterable)
+    except TypeError:
+        nr_items = len(tuple(actual_iterable))
+    return nr_items
 
 def assert_not_equals(expected, actual, message=None):
     if expected != actual:
@@ -202,7 +206,8 @@ def assert_dict_contains(expected_sub_dict, actual_super_dict, message=None):
             raise AssertionError(failure_message)
 
 def assert_is_empty(actual, message=None):
-    if len(actual) == 0:
+    len_actual = _get_length(actual)
+    if len_actual == 0:
         return
     default_message = '%s is not empty' % (repr(actual))
     if message is None:
@@ -210,7 +215,7 @@ def assert_is_empty(actual, message=None):
     raise AssertionError(default_message + ': ' + message)
 
 def assert_is_not_empty(actual, message=None):
-    if len(actual) > 0:
+    if _get_length(actual) > 0:
         return
     default_message = '%s is empty' % (repr(actual))
     if message is None:

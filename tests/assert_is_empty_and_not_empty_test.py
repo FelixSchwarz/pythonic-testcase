@@ -25,6 +25,12 @@ class AssertIsEmptyTest(TestCase):
         self.assert_fail('foo')
         self.assert_fail([1])
 
+    def test_can_consume_generator_if_necessary(self):
+        def generator():
+            for i in (1, 2, 3):
+                yield i
+        self.assert_fail(generator())
+
     def test_fails_with_sensible_default_error_message(self):
         # using a string here on purpose so we can check that repr is used in
         # exception message
@@ -50,6 +56,12 @@ class AssertIsNotEmptyTest(TestCase):
         self.assert_fail(())
         self.assert_fail([])
         self.assert_fail({})
+
+    def test_can_consume_generator_if_necessary(self):
+        def generator():
+            for i in (1, 2, 3):
+                yield i
+        assert_is_not_empty(generator())
 
     def test_fails_with_sensible_default_error_message(self):
         # using a string here on purpose so we can check that repr is used in
