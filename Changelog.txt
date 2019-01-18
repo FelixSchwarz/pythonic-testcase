@@ -1,7 +1,7 @@
 Changelog
 ******************************
 
-1.4.0 (2019-??*??)
+1.4.0 (2019-01-18)
 ====================
 - implement "assert_is(expr1, expr2)" and "assert_is_not(expr1, expr2)"
 - implement "assert_path_exists()", "assert_path_not_exists()",
