@@ -10,8 +10,13 @@ python:
  - "pypy"
  - "pypy3"
 
+install:
+ # test with nose2: which can also report "expected failures"
+ - pip install --upgrade nose2
+ - echo "always-on = True" >> unittest.cfg
+
 before_script:
  - mkdir -p shippable/testresults
 
 script:
- - nosetests --with-xunit --xunit-file=shippable/testresults/nosetests.xml
+ - nose2
