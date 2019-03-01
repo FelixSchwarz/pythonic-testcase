@@ -14,10 +14,18 @@
 from __future__ import absolute_import, unicode_literals, print_function
 
 from contextlib import contextmanager
+from datetime import datetime as DateTime, timedelta as TimeDelta, tzinfo as TZInfo
 import functools
 import os
 from unittest import TestCase
 import sys
+
+try:
+    # Python 3.2+
+    from datetime import timezone as TimeZone
+    UTC = TimeZone.utc
+except ImportError:
+    UTC = None
 
 
 __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
@@ -31,6 +39,7 @@ __all__ = ['assert_almost_equals', 'assert_callable', 'assert_contains',
            'assert_length', 'assert_none',
            'assert_not_raises',
            'assert_not_contains', 'assert_not_none', 'assert_not_equals',
+           'assert_almost_now',
            'assert_path_exists',
            'assert_path_not_exists',
            'assert_raises', 'assert_smaller', 'assert_true', 'assert_trueish',
@@ -294,6 +303,31 @@ def assert_file_not_exists(path, message=None):
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
 
+def assert_almost_now(datetime, max_delta=None, tz=None, message=None):
+    if max_delta is None:
+        max_delta = TimeDelta(seconds=1)
+    elif not isinstance(max_delta, TimeDelta):
+        max_delta = TimeDelta(seconds=max_delta)
+    has_tz = datetime.tzinfo
+    if tz is None:
+        tz = UTC if has_tz else None
+    elif not has_tz:
+        raise AssertionError('%r is not timezone-aware but tz=%r was passed to assert_almost_equals()' % (datetime, tz))
+
+    now = DateTime.now(tz=tz)
+    if datetime >= now - max_delta:
+        return
+    default_message = '%r is older than %s seconds' % (datetime, _total_seconds(max_delta))
+    if message is None:
+        raise AssertionError(default_message)
+    raise AssertionError(default_message + ': ' + message)
+
+def _total_seconds(timedelta):
+    if hasattr(timedelta, 'total_seconds'):
+        # Python 3.2+
+        return timedelta.total_seconds()
+    return (timedelta.days * 24 * 60 * 60) + timedelta.seconds + (timedelta.microseconds / 1000000)
+
 
 def create_spy(name=None):
     class Spy(object):
@@ -393,6 +427,21 @@ def expect_failure(f):
 
 def add_expected_failure_py(result, test, err):
     result.addSkip(test, str(err))
+
+# --- other helpers -----------------------------------------------------------
+class _UTC(TZInfo):
+    def utcoffset(self, dt):
+        return TimeDelta(seconds=0)
+
+    def dst(self, dt):
+        return TimeDelta(seconds=0)
+
+    def __repr__(self):
+        return '<UTC>'
+
+
+if UTC is None:
+    UTC = _UTC()
 
 # --- unittest.TestCase alternative with pythonic names -----------------------
 from types import MethodType

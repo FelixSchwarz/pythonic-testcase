@@ -4,6 +4,7 @@ Changelog
 1.4.1 (2019-??-??)
 ====================
 - assert_is_empty() and assert_is_not_empty() now consume generators if necessary
+- implement "assert_almost_now()"
 
 1.4.0 (2019-01-18)
 ====================
