@@ -218,7 +218,8 @@ def assert_is_empty(actual, message=None):
     len_actual = _get_length(actual)
     if len_actual == 0:
         return
-    default_message = '%s is not empty' % (repr(actual))
+    default_message = '%r is not empty (%d items)' % (actual, len_actual)
+    default_message = '%r is not empty' % (actual)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
