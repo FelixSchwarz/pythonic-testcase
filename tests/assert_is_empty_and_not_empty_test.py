@@ -35,11 +35,11 @@ class AssertIsEmptyTest(TestCase):
         # using a string here on purpose so we can check that repr is used in
         # exception message
         e = self.assert_fail('bar')
-        assert_equals("%r is not empty" % 'bar', exception_message(e))
+        assert_equals("%r is not empty (3 items)" % 'bar', exception_message(e))
 
     def test_can_specify_additional_custom_message(self):
         e = self.assert_fail('bar', message='Foo')
-        assert_equals("%r is not empty: Foo" % 'bar', exception_message(e))
+        assert_equals("%r is not empty (3 items): Foo" % 'bar', exception_message(e))
 
 
 class AssertIsNotEmptyTest(TestCase):
