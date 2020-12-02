@@ -106,7 +106,7 @@ def assert_not_raises(exception=Exception, callable=NotSet, message=None):
 def assert_equals(expected, actual, message=None):
     if expected == actual:
         return
-    default_message = '%s != %s' % (repr(expected), repr(actual))
+    default_message = '%r != %r' % (expected, actual)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -114,7 +114,7 @@ def assert_equals(expected, actual, message=None):
 def assert_is(expr1, expr2, message=None):
     if expr1 is expr2:
         return
-    default_message = '%s is not %s' % (repr(expr1), repr(expr2))
+    default_message = '%r is not %r' % (expr1, expr2)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -122,7 +122,7 @@ def assert_is(expr1, expr2, message=None):
 def assert_is_not(expr1, expr2, message=None):
     if expr1 is not expr2:
         return
-    default_message = '%s is identical to %s' % (repr(expr1), repr(expr2))
+    default_message = '%r is identical to %r' % (expr1, expr2)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -136,7 +136,7 @@ def assert_false(actual, message=None):
 def assert_falseish(actual, message=None):
     if not actual:
         return
-    default_message = '%s is not falseish' % repr(actual)
+    default_message = '%r is not falseish' % (actual,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -147,7 +147,7 @@ def assert_true(actual, message=None):
 def assert_trueish(actual, message=None):
     if actual:
         return
-    default_message = '%s is not trueish' % repr(actual)
+    default_message = '%r is not trueish' % (actual,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -166,7 +166,7 @@ def _get_length(actual_iterable):
 def assert_not_equals(expected, actual, message=None):
     if expected != actual:
         return
-    default_message = '%s == %s' % (repr(expected), repr(actual))
+    default_message = '%r == %r' % (expected, actual)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -178,9 +178,9 @@ def assert_almost_equals(expected, actual, max_delta=None, message=None):
         return
 
     if max_delta is None:
-        default_message = '%s != %s' % (repr(expected), repr(actual))
+        default_message = '%r != %r' % (expected, actual)
     else:
-        default_message = '%s != %s +/- %s' % (repr(expected), repr(actual), repr(max_delta))
+        default_message = '%r != %r +/- %r' % (expected, actual, max_delta)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -191,7 +191,7 @@ def assert_not_none(actual, message=None):
 def assert_contains(expected_value, actual_iterable, message=None):
     if expected_value in actual_iterable:
         return
-    default_message = '%s not in %s' % (repr(expected_value), repr(actual_iterable))
+    default_message = '%r not in %r' % (expected_value, actual_iterable)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -199,7 +199,7 @@ def assert_contains(expected_value, actual_iterable, message=None):
 def assert_not_contains(expected_value, actual_iterable, message=None):
     if expected_value not in actual_iterable:
         return
-    default_message = '%s in %s' % (repr(expected_value), repr(actual_iterable))
+    default_message = '%r in %r' % (expected_value, actual_iterable)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -208,8 +208,8 @@ def assert_dict_contains(expected_sub_dict, actual_super_dict, message=None):
     for key, value in expected_sub_dict.items():
         assert_contains(key, actual_super_dict, message=message)
         if value != actual_super_dict[key]:
-            failure_message = '%(key)s=%(expected)s != %(key)s=%(actual)s' % \
-                dict(key=repr(key), expected=repr(value), actual=repr(actual_super_dict[key]))
+            failure_message = '%(key)r=%(expected)r != %(key)r=%(actual)r' % \
+                dict(key=key, expected=value, actual=actual_super_dict[key])
             if message is not None:
                 failure_message += ': ' + message
             raise AssertionError(failure_message)
@@ -226,7 +226,7 @@ def assert_is_empty(actual, message=None):
 def assert_is_not_empty(actual, message=None):
     if _get_length(actual) > 0:
         return
-    default_message = '%s is empty' % (repr(actual))
+    default_message = '%r is empty' % (actual,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -234,7 +234,7 @@ def assert_is_not_empty(actual, message=None):
 def assert_callable(value, message=None):
     if callable(value):
         return
-    default_message = "%s is not callable" % repr(value)
+    default_message = "%r is not callable" % (value,)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -247,7 +247,7 @@ def assert_isinstance(value, klass, message=None):
         if isinstance(instance_or_klass, type):
             return instance_or_klass.__name__
         return instance_or_klass.__class__.__name__
-    default_message = "%s (%s) is not an instance of %s" % (repr(value), class_name(value), class_name(klass))
+    default_message = "%r (%s) is not an instance of %s" % (value, class_name(value), class_name(klass))
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -255,7 +255,7 @@ def assert_isinstance(value, klass, message=None):
 def assert_smaller(smaller, greater, message=None):
     if smaller < greater:
         return
-    default_message = '%s >= %s' % (repr(smaller), repr(greater))
+    default_message = '%r >= %r' % (smaller, greater)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
@@ -263,7 +263,7 @@ def assert_smaller(smaller, greater, message=None):
 def assert_greater(greater, smaller, message=None):
     if greater > smaller:
         return
-    default_message = '%s <= %s' % (repr(greater), repr(smaller))
+    default_message = '%r <= %r' % (greater, smaller)
     if message is None:
         raise AssertionError(default_message)
     raise AssertionError(default_message + ': ' + message)
